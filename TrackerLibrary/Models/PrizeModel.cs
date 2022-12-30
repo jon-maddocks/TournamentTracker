@@ -4,28 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrackerLibrary
+namespace TrackerLibrary.Models
 {
     public class PrizeModel
     {
         public int id { get; set; }
-        public int PLaceNumber { get; set; }
+        public int PlaceNumber { get; set; }
         public string PlaceName { get; set; }
         public decimal PrizeAmount { get; set; }
         public double PrizePercentage { get; set; }
 
         public PrizeModel()
-        { 
-            
+        {
+
         }
 
-        public PrizeModel(string pLaceNumber, string placeName, string prizeAmount, string prizePercentage)
+        public PrizeModel(string placeName, string placeNumber, string prizeAmount, string prizePercentage)
         {
-            PlaceName = pLaceNumber;
+            PlaceName = placeName;
 
             int placeNumberValue = 0;
-            int.TryParse(pLaceNumber, out placeNumberValue);
-            PLaceNumber = placeNumberValue;
+            int.TryParse(placeNumber, out placeNumberValue);
+            PlaceNumber = placeNumberValue;
 
             decimal prizeAmountValue = 0;
             decimal.TryParse(prizeAmount, out prizeAmountValue);
