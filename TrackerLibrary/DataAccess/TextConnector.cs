@@ -13,6 +13,7 @@ namespace TrackerLibrary.DataAccess
         private const string PrizesFile = "PrizeModels.csv";
         private const string PeopleFile = "PersonModels.csv";
         private const string TeamFile = "TeamModels.csv";
+        private const string TournamentFile = "TournamentModels.csv";
 
         public PrizeModel CreatePrize(PrizeModel model)
         {            
@@ -24,9 +25,9 @@ namespace TrackerLibrary.DataAccess
             int currentID = 1;
             if(prizes.Count > 0)
             {
-                currentID = prizes.OrderByDescending(x => x.id).First().id + 1;
+                currentID = prizes.OrderByDescending(x => x.Id).First().Id + 1;
             }
-            model.id = currentID;
+            model.Id = currentID;
           
             //Add the new record with the new ID(max + 1).
             prizes.Add(model);
@@ -57,6 +58,7 @@ namespace TrackerLibrary.DataAccess
             return PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
         }
 
+        // TODO - Refactor to match void methods
         public TeamModel CreateTeam(TeamModel model)
         {
             List<TeamModel> teams = TeamFile.FullFilePath().LoadFile().ConvertToTeamModels(PeopleFile);
@@ -77,5 +79,21 @@ namespace TrackerLibrary.DataAccess
             return TeamFile.FullFilePath().LoadFile().ConvertToTeamModels(PeopleFile);
         }
 
+        public void CreateTournament(TournamentModel model)
+        {
+            List<TournamentModel> tournaments = TournamentFile
+                .FullFilePath()
+                .LoadFile()
+                .ConvertToTournamentModels(TeamFile, PeopleFile, PrizesFile);
+
+            int currentID = 1;
+            if (tournaments.Count > 0)
+            {
+                currentID = tournaments.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+            model.Id = currentID;
+            tournaments.Add(model);
+            tournaments.SaveToTournamentFile(TournamentFile);
+        }
     }
 }
