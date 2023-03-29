@@ -99,5 +99,13 @@ namespace TrackerLibrary.DataAccess
             tournaments.Add(model);
             tournaments.SaveToTournamentFile(TournamentFile);
         }
+
+        public List<TournamentModel> GetTournament_All()
+        {
+            return TournamentFile
+                .FullFilePath()
+                .LoadFile()
+                .ConvertToTournamentModels(TeamFile, PeopleFile, PrizesFile);
+        }
     }
 }
